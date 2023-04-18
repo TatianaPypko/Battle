@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { fetchPopularRepos } from "./api";
+import { fetchPopularRepos } from "../api";
 import SelectedLanguage from "./SelectedLanguage";
 import Repos from "./Repos";
-import AlternativeContent from "./AlternativeContent";
+import AlternativeContent from "../AlternativeContent";
 
 const Popular = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("All");
