@@ -1,41 +1,35 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useSelector, useDispatch } from "react-redux";
+import { resetPlayersData } from "../redux/buttle/buttle.thunk";
 import { Link } from "react-router-dom";
 import PlayerInput from "./PlayerInput";
 import PlayerPreview from "./PlayerPreview";
+import { useEffect } from "react";
 
 const Battle = () => {
-  const [playersData, setPlayersData] = useState({
-    playerOneName: "",
-    playerTwoName: "",
-    playerOneImage: null,
-    playerTwoImage: null,
-  });
+  const playersData = useSelector((state) => state.battleReducer);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (id, username) => {
-    setPlayersData((prevState) => ({
-      ...prevState,
-      [`${id}Name`]: username,
-      [`${id}Image`]: `https://github.com/${username}.png?size200`,
-    }));
-  };
+  useEffect(() => {
+    if (playersData.playerOneImage || playersData.playerTwoImage) {
+      handleResert("playerOne");
+      handleResert("playerTwo");
+    }
+  }, []);
 
   const handleResert = (id) => {
-    setPlayersData((prevState) => ({
-      ...prevState,
+    const data = {
       [`${id}Name`]: "",
       [`${id}Image`]: null,
-    }));
+    };
+    dispatch(resetPlayersData(data));
   };
 
   return (
     <div>
       <div className="row">
         {!playersData.playerOneImage ? (
-          <PlayerInput
-            id="playerOne"
-            label="Player 1"
-            onSubmit={handleSubmit}
-          />
+          <PlayerInput id="playerOne" label="Player 1" />
         ) : (
           <PlayerPreview
             avatar={playersData.playerOneImage}
@@ -47,11 +41,7 @@ const Battle = () => {
           </PlayerPreview>
         )}
         {!playersData.playerTwoImage ? (
-          <PlayerInput
-            id="playerTwo"
-            label="Player 2"
-            onSubmit={handleSubmit}
-          />
+          <PlayerInput id="playerTwo" label="Player 2" />
         ) : (
           <PlayerPreview
             avatar={playersData.playerTwoImage}

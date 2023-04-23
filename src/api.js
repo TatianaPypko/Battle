@@ -2,7 +2,7 @@ import axios from "axios";
 
 const handleError = (error) => console.error(error);
 
-const getProfile = (userName) => {
+export const getProfile = (userName) => {
   return axios
     .get(`https://api.github.com/users/${userName}`)
     .then((user) => user.data)
@@ -27,19 +27,15 @@ const calculateScore = (profile, repos) => {
   return followers + totalStars;
 };
 
-const getUserData = (player) => {
-  return Promise.all([getProfile(player), getRepos(player)])
+const getUserData = (player) =>
+  Promise.all([getProfile(player), getRepos(player)])
     .then(([profile, repos]) => ({
       profile,
       score: calculateScore(profile, repos),
     }))
     .catch(handleError);
-};
 
-const sortPlayers = (players) => {
-  console.log(players);
-  return players.sort((a, b) => b.score - a.score);
-};
+const sortPlayers = (players) => players.sort((a, b) => b.score - a.score);
 
 export const battle = (players) => {
   return Promise.all(players.map(getUserData))

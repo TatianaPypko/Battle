@@ -1,37 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getResult } from "../redux/buttle/buttle.thunk";
 import { useLocation, Link } from "react-router-dom";
-import { battle } from "../api";
 import PlayerPreview from "./PlayerPreview";
 import AlternativeContent from "../AlternativeContent";
 
 const Results = () => {
+  const results = useSelector((state) => state.battleReducer.results);
+  const loading = useSelector((state) => state.battleReducer.loading);
+  const dispatch = useDispatch();
   const location = useLocation();
-  const initialValue = {
-    loading: false,
-    winner: {},
-    loser: {},
-    error: null,
-  };
-  const [state, setState] = useState(initialValue);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-
-    setState((prev) => ({ ...prev, loading: true }));
-    battle([params.get("playerOneName"), params.get("playerTwoName")])
-      .then((data) => {
-        setState((prev) => ({ ...prev, winner: data[0], loser: data[1] }));
-      })
-      .catch((error) => {
-        setState((prev) => ({ ...prev, error }));
-      })
-      .finally((data) => {
-        setState((prev) => ({ ...prev, loading: false }));
-      });
+    dispatch(
+      getResult([params.get("playerOneName"), params.get("playerTwoName")])
+    );
   }, []);
 
-  if (state.loading) {
+  if (loading) {
     return (
       <div className="row">
         <AlternativeContent />
@@ -39,31 +27,32 @@ const Results = () => {
     );
   }
 
-  if (state.error) {
+  if (results.error) {
     return (
       <div className="row">
-        <div>{state.error}</div>
+        <div>{results.error}</div>
       </div>
     );
   }
 
   return (
     <div className="column">
-      {state.winner.profile ? (
+      {results.winner.profile ? (
         <>
           <PlayerPreview
-            avatar={state.winner.profile.avatar_url}
-            userName={state.winner.profile.login}
+            avatar={results.winner.profile.avatar_url}
+            userName={results.winner.profile.login}
           >
             <h2>
-              WINNER: {state.winner.profile.name} (score - {state.winner.score})
+              WINNER: {results.winner.profile.name} (score -{" "}
+              {results.winner.score})
             </h2>
-            <p>Location: {state.winner.profile.location}</p>
-            <p>Company: {state.winner.profile.company}</p>
-            <p>Followers: {state.winner.profile.followers}</p>
-            <p>Following: {state.winner.profile.following}</p>
-            <p>Public repos: {state.winner.profile.public_repos}</p>
-            <p>Blog: {state.winner.profile.blog}</p>
+            <p>Location: {results.winner.profile.location}</p>
+            <p>Company: {results.winner.profile.company}</p>
+            <p>Followers: {results.winner.profile.followers}</p>
+            <p>Following: {results.winner.profile.following}</p>
+            <p>Public repos: {results.winner.profile.public_repos}</p>
+            <p>Blog: {results.winner.profile.blog}</p>
           </PlayerPreview>
           <Link className="button" to="/battle">
             New battle

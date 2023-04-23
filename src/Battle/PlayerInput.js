@@ -1,12 +1,22 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getPlayersData } from "../redux/buttle/buttle.thunk";
 
-const PlayerInput = ({ id, onSubmit, label }) => {
-  const [username, setUsername] = useState("");
+const PlayerInput = ({ id, label }) => {
+  const [userName, setUsername] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (username) onSubmit(id, username);
+    if (userName) {
+      const data = {
+        [`${id}Name`]: userName,
+        [`${id}Image`]: `https://github.com/${userName}.png?size200`,
+        userName,
+      };
+      dispatch(getPlayersData(data));
+    }
   };
 
   return (
@@ -19,7 +29,7 @@ const PlayerInput = ({ id, onSubmit, label }) => {
         id="username"
         placeholder="Github username"
         autoComplete="off"
-        value={username}
+        value={userName}
         onChange={(event) => setUsername(event.target.value)}
       />
       <button className="button" type="submit">
