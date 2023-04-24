@@ -5,7 +5,7 @@ import {
   getPlayerFailureAction,
   setSuccessResults,
   setErrorResults,
-} from "./buttle.actions";
+} from "./battle.actions";
 
 import { getProfile, battle } from "../../api";
 

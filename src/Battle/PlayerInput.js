@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getPlayersData } from "../redux/buttle/buttle.thunk";
+import { getPlayersData } from "../redux/battle/battle.thunk";
 
 const PlayerInput = ({ id, label }) => {
   const [userName, setUsername] = useState("");

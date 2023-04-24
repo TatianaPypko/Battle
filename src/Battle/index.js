@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector, useDispatch } from "react-redux";
-import { resetPlayersData } from "../redux/buttle/buttle.thunk";
+import { resetPlayersData } from "../redux/battle/battle.thunk";
 import { Link } from "react-router-dom";
 import PlayerInput from "./PlayerInput";
 import PlayerPreview from "./PlayerPreview";

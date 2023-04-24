@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getResult } from "../redux/buttle/buttle.thunk";
+import { getResult } from "../redux/battle/battle.thunk";
 import { useLocation, Link } from "react-router-dom";
 import PlayerPreview from "./PlayerPreview";
 import AlternativeContent from "../AlternativeContent";

@@ -5,7 +5,7 @@ import {
   GET_PLAYER_FAILURE,
   SET_RESULT_SUCCESS,
   SET_RESULT_ERROR,
-} from "./buttle.constans";
+} from "./battle.constans";
 
 export const setPlayerDataAction = (payload) => ({
   type: PLAYER_DATA,
