@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getPlayersData } from "../redux/battle/battle.thunk";
+import { getProfile } from "../redux/battle/battle.requests";
 
 const PlayerInput = ({ id, label }) => {
   const [userName, setUsername] = useState("");
@@ -15,7 +15,7 @@ const PlayerInput = ({ id, label }) => {
         [`${id}Image`]: `https://github.com/${userName}.png?size200`,
         userName,
       };
-      dispatch(getPlayersData(data));
+      dispatch(getProfile(data));
     }
   };
 

@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getResult } from "../redux/battle/battle.thunk";
+import { battle } from "../redux/battle/battle.requests";
 import { useLocation, Link } from "react-router-dom";
 import PlayerPreview from "./PlayerPreview";
 import AlternativeContent from "../AlternativeContent";
 
 const Results = () => {
-  const results = useSelector((state) => state.battleReducer.results);
-  const loading = useSelector((state) => state.battleReducer.loading);
+  const results = useSelector((state) => state.battle.results);
+  const loading = useSelector((state) => state.battle.loading);
   const dispatch = useDispatch();
   const location = useLocation();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     dispatch(
-      getResult([params.get("playerOneName"), params.get("playerTwoName")])
+      battle([params.get("playerOneName"), params.get("playerTwoName")])
     );
   }, []);
 

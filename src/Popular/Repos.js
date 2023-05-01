@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 
 const Repos = () => {
-  const loading = useSelector((state) => state.popularReducer.loading);
-  const repos = useSelector((state) => state.popularReducer.repos);
-  const error = useSelector((state) => state.popularReducer.error);
+  const loading = useSelector((state) => state.popular.loading);
+  const repos = useSelector((state) => state.popular.repos);
+  const error = useSelector((state) => state.popular.error);
 
   if (loading) {
     return <p>Loading...</p>;

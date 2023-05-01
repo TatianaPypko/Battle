@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector, useDispatch } from "react-redux";
-import { resetPlayersData } from "../redux/battle/battle.thunk";
+import { setPlayerDataAction } from "../redux/battle/buttle.slice";
 import { Link } from "react-router-dom";
 import PlayerInput from "./PlayerInput";
 import PlayerPreview from "./PlayerPreview";
 import { useEffect } from "react";
 
 const Battle = () => {
-  const playersData = useSelector((state) => state.battleReducer);
+  const playersData = useSelector((state) => state.battle);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,11 +19,7 @@ const Battle = () => {
   }, []);
 
   const handleResert = (id) => {
-    const data = {
-      [`${id}Name`]: "",
-      [`${id}Image`]: null,
-    };
-    dispatch(resetPlayersData(data));
+    dispatch(setPlayerDataAction([`${id}Name`, `${id}Image`]));
   };
 
   return (

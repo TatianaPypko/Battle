@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRepos } from "../redux/popular/popular.thunk";
+import { setSelectedLanguage } from "../redux/popular/popular.slice";
+import { fetchPopularRepos } from "../redux/popular/popular.requests";
 
 const languages = ["All", "Javascript", "Ruby", "Java", "CSS", "Python"];
 
 const SelectedLanguage = () => {
   const dispatch = useDispatch();
   const selectedLanguage = useSelector(
-    (state) => state.popularReducer.selectedLanguage
+    (state) => state.popular.selectedLanguage
   );
-  const loading = useSelector((state) => state.popularReducer.loading);
+  const loading = useSelector((state) => state.popular.loading);
 
   useEffect(() => {
-    dispatch(getRepos(selectedLanguage));
+    dispatch(fetchPopularRepos(selectedLanguage));
   }, []);
 
   return (
@@ -26,7 +27,10 @@ const SelectedLanguage = () => {
             cursor: loading ? "default" : "pointer",
           }}
           onClick={() => {
-            if (!loading) return dispatch(getRepos(language));
+            if (!loading) {
+              dispatch(setSelectedLanguage(language));
+              dispatch(fetchPopularRepos(language));
+            }
           }}
         >
           {language}
